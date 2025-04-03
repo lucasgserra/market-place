@@ -5,6 +5,7 @@ import dev.lucasserra.market_place.domain.product.dto.ProductRequestDTO
 import dev.lucasserra.market_place.exceptions.NotFoundEntity
 import dev.lucasserra.market_place.exceptions.StockInsufficientEntity
 import dev.lucasserra.market_place.repositories.ProductRepository
+import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.stereotype.Service
 import java.util.Optional
 
@@ -18,6 +19,10 @@ class ProductService(private val repository: ProductRepository) {
     }
 
     fun getAllProducts(): List<Product> = repository.findAll()
+
+    fun getProduct(uuid: String): Optional<Product> {
+        return repository.findById(uuid)
+    }
 
     fun buyProduct(uuid: String, amount: Int) {
         val optionalProduct: Optional<Product> = repository.findById(uuid)
