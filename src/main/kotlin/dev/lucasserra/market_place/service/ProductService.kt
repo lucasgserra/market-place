@@ -48,4 +48,12 @@ class ProductService(private val repository: ProductRepository) {
     fun hasAmountProduct(product: Product, amount: Int): Boolean {
         return product.amount >= amount
     }
+
+    fun deleteProduct(uuid: String) {
+        val product = repository.findById(uuid)
+        if (product.isPresent) {
+            repository.delete(product.get())
+        }
+        else throw NotFoundEntity("Product not found")
+    }
 }
