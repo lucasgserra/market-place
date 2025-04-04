@@ -26,27 +26,27 @@ class ProductController(private val service: ProductService) {
 
     @PostMapping("/buy")
     fun buyProduct(@RequestBody productStock: ProductStockDTO): ResponseEntity<Void> {
-        service.buyProduct(productStock.uuid, productStock.amount)
+        service.buyProduct(productStock.id, productStock.amount)
         return ResponseEntity.status(HttpStatus.ACCEPTED).build()
     }
 
     @PostMapping("/addStock")
     fun addStockProduct(@RequestBody productStock: ProductStockDTO): ResponseEntity<Void> {
-        service.addStockProduct(productStock.uuid, productStock.amount)
+        service.addStockProduct(productStock.id, productStock.amount)
         return ResponseEntity.status(HttpStatus.ACCEPTED).build()
     }
 
-    @GetMapping("/{uuid}")
-    fun findProduct(@PathVariable uuid: String): ResponseEntity<Product> {
-        val product = service.getProduct(uuid);
+    @GetMapping("/{id}")
+    fun findProduct(@PathVariable id: Integer): ResponseEntity<Product> {
+        val product = service.getProduct(id);
         return if (product.isPresent) {
             ResponseEntity.status(HttpStatus.ACCEPTED).body(product.get());
         } else ResponseEntity.status(HttpStatus.NOT_FOUND).build()
     }
 
-    @DeleteMapping("/{uuid}")
-    fun deleteProduct(@PathVariable uuid: String): ResponseEntity<Void> {
-        service.deleteProduct(uuid)
+    @DeleteMapping("/{id}")
+    fun deleteProduct(@PathVariable id: Integer): ResponseEntity<Void> {
+        service.deleteProduct(id)
         return ResponseEntity.status(HttpStatus.OK).build()
     }
 

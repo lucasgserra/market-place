@@ -14,8 +14,8 @@ import lombok.NoArgsConstructor
 data class Product(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    var id: String? = null,
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id: Integer? = null,
     @JoinColumn(nullable = false)
     var name: String,
     @JoinColumn(nullable = false)

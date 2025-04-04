@@ -20,12 +20,12 @@ class ProductService(private val repository: ProductRepository) {
 
     fun getAllProducts(): List<Product> = repository.findAll()
 
-    fun getProduct(uuid: String): Optional<Product> {
-        return repository.findById(uuid)
+    fun getProduct(id: Integer): Optional<Product> {
+        return repository.findById(id)
     }
 
-    fun buyProduct(uuid: String, amount: Int) {
-        val optionalProduct: Optional<Product> = repository.findById(uuid)
+    fun buyProduct(id: Integer, amount: Int) {
+        val optionalProduct: Optional<Product> = repository.findById(id)
         if (optionalProduct.isPresent) {
             val product = optionalProduct.get()
             if (!hasAmountProduct(product, amount)) throw StockInsufficientEntity("Product amount is insufficient")
@@ -36,8 +36,8 @@ class ProductService(private val repository: ProductRepository) {
         } else throw NotFoundEntity("Product not found")
     }
 
-    fun addStockProduct(uuid: String, amount: Int) {
-        val optionalProduct: Optional<Product> = repository.findById(uuid)
+    fun addStockProduct(id: Integer, amount: Int) {
+        val optionalProduct: Optional<Product> = repository.findById(id)
         if (optionalProduct.isPresent) {
             val product = optionalProduct.get()
             val updatedProduct = product.copy(amount = (product.amount+amount))
@@ -49,8 +49,8 @@ class ProductService(private val repository: ProductRepository) {
         return product.amount >= amount
     }
 
-    fun deleteProduct(uuid: String) {
-        val product = repository.findById(uuid)
+    fun deleteProduct(id: Integer) {
+        val product = repository.findById(id)
         if (product.isPresent) {
             repository.delete(product.get())
         }
